@@ -1,19 +1,20 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 void main(){
   runApp(
       MaterialApp(
         debugShowCheckedModeBanner: false, // To remove the debug banner on the output
-        home: LoginForm(), // Home is used to make the loginForm as the first poping UI
+        home: LoginForm(), // Home is used to make the loginForm as the first popping UI
       )
   );
 }
 
-class LoginForm extends StatefulWidget{ // Statefull widget because it is dynamic
+class LoginForm extends StatefulWidget{ // Stateful widget because it is dynamic
   _LoginFormState createState() => _LoginFormState();
 }
 
-class _LoginFormState extends State<LoginForm>{
+class _LoginFormState extends State<LoginForm> {
   String name = '';
   String email = '';
   String password = '';
@@ -23,29 +24,60 @@ class _LoginFormState extends State<LoginForm>{
   bool _obscureConfirmPassword = true;
   bool _isImageChanged = false;
 
-  void _togglePasswordVisibility(){
+  void _togglePasswordVisibility() {
     setState(() {
       _obscurePassword = !_obscurePassword;
     });
   }
 
-  void _toggleConfirmPasswordVisibility(){
+  void _toggleConfirmPasswordVisibility() {
     setState(() {
       _obscureConfirmPassword = !_obscureConfirmPassword;
     });
   }
 
-  void _submitForm(){
+  void _showCupertinoAlert(String message){
+    showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context){
+          return CupertinoAlertDialog(
+            title: Text(
+                "Error"
+            ),
+            content: Text(
+                message
+            ),
+            actions: [
+              CupertinoDialogAction(
+                  child: Text(
+                      "OK"
+                  ),
+                onPressed: (){
+                    Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        },
+    );
+  }
+
+  void _checkEmpty(){
     if(password == confirmPassword){
       setState(() {
         _isImageChanged = !_isImageChanged;
       });
     }
-}
+    if(name.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty){
+      _showCupertinoAlert("All the fields are mandatory");
+    }
+    else if(password != confirmPassword){
+      _showCupertinoAlert("Password not matching");
+    }
+      debugPrint("Submission Successful");
+  }
 
-
-
-  Widget build(BuildContext conetxt){ //build is used to describe the UI
+  Widget build(BuildContext context){ //build is used to describe the UI
     return Scaffold(
       appBar: AppBar(
         title: Center(
@@ -63,44 +95,44 @@ class _LoginFormState extends State<LoginForm>{
           mainAxisAlignment: MainAxisAlignment.center, //language= Align to center
           children: <Widget>[
             TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: "Enter Name"
-              ),
-              onChanged: (value){
-                setState(() {
-                  name = value;
-                });
-              }
-            ),
-            SizedBox(
-              height: 20.0
-            ),
-            TextField(
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Enter Email"
-              ),
-              onChanged: (value) {
-                setState(() {
-                  email = value;
-                });
-              }
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "Enter Name"
+                ),
+                onChanged: (value){
+                  setState(() {
+                    name = value;
+                  });
+                }
             ),
             SizedBox(
                 height: 20.0
             ),
             TextField(
-              decoration: InputDecoration(
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "Enter Email"
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    email = value;
+                  });
+                }
+            ),
+            SizedBox(
+                height: 20.0
+            ),
+            TextField(
+                decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: "Enter Password",
                   suffixIcon: IconButton(
-                      icon: Icon(
-                          _obscurePassword ? Icons.lock : Icons.lock_open
-                      ),
+                    icon: Icon(
+                        _obscurePassword ? Icons.lock : Icons.lock_open
+                    ),
                     onPressed: _togglePasswordVisibility,
                   ),
-              ),
+                ),
                 obscureText: _obscurePassword,
                 onChanged: (value) {
                   setState(() {
@@ -112,16 +144,16 @@ class _LoginFormState extends State<LoginForm>{
                 height: 20.0
             ),
             TextField(
-              decoration: InputDecoration(
+                decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: "Enter Confirm Password",
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscureConfirmPassword ? Icons.lock : Icons.lock_open
-                     ),
+                        _obscureConfirmPassword ? Icons.lock : Icons.lock_open
+                    ),
                     onPressed: _toggleConfirmPasswordVisibility,
                   ),
-              ),
+                ),
                 obscureText: _obscureConfirmPassword, // For hiding password
                 onChanged: (value) {
                   setState(() {
@@ -133,14 +165,16 @@ class _LoginFormState extends State<LoginForm>{
                 height: 20.0
             ),
             ElevatedButton(
-                onPressed: _submitForm,
-                child: Text(
-                  "Submit",
-                  style: TextStyle(
-                      color: Colors.blue,
-                      fontSize: 20.0
-                  ),
+              onPressed: () {
+                _checkEmpty();
+              },
+              child: Text(
+                "Submit",
+                style: TextStyle(
+                    color: Colors.blue,
+                    fontSize: 20.0
                 ),
+              ),
             ),
             SizedBox(
                 height: 20.0
@@ -148,7 +182,7 @@ class _LoginFormState extends State<LoginForm>{
             InkWell(
               onTap: _isImageChanged ? null : () {},
               child: Image.asset(
-                _isImageChanged ? 'images/apple.png' : "images/login.png",
+                _isImageChanged ? 'images/apple.jpeg' : "images/login.png",
                 height: 150.0,
                 width: 150.0,
               ),

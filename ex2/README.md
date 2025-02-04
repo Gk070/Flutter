@@ -1,16 +1,9 @@
-# ex2
+Flutter Login Form
+------------------
+    This is a simple Flutter-based login form with validation and password visibility toggle. It includes fields for Name, Email, Password, and Confirm Password. A Cupertino-style alert is shown for validation errors. Upon successful submission, the displayed image changes dynamically.
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Features
+    Input fields for user details
+    Password visibility toggle
+    Validation alerts for empty fields and password mismatch
+    Dynamic image change on successful submission
