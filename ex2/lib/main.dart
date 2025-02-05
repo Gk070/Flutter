@@ -42,7 +42,7 @@ class _LoginFormState extends State<LoginForm> {
         builder: (BuildContext context){
           return CupertinoAlertDialog(
             title: Text(
-                "Error"
+                "Invalid Credentials!"
             ),
             content: Text(
                 message
